@@ -12,7 +12,7 @@ import xml.etree.ElementTree as ET
 import re
 from urllib.parse import urlparse
 from openai import OpenAI
-
+import streamlit as st
 load_dotenv()
 
 class PapuyChatbot:
@@ -46,7 +46,7 @@ class PapuyChatbot:
         self.openai = ChatOpenAI(
             model="gpt-4",
             temperature=0.7,
-            api_key=os.getenv("OPENAI_API_KEY")
+            api_key=st.secrets["OPENAI_API_KEY"]
         )
         
         # Update system message to include APA citation requirements
@@ -83,8 +83,8 @@ class PapuyChatbot:
             | self.openai
             | StrOutputParser()
         )
-        self.pubmed_api_key = os.getenv("PUBMED_API_KEY")
-        self.serp_api_key = os.getenv("SERP_API_KEY")
+        self.pubmed_api_key = st.secrets["PUBMED_API_KEY"]
+        self.serp_api_key = st.secrets["SERP_API_KEY"]
         self.base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
         self.serp_url = "https://serpapi.com/search.json"
         

@@ -18,11 +18,11 @@ if 'show_love' not in st.session_state:
     st.session_state.show_love = False
 
 def login(username, password):
-    return username == os.getenv("APP_USERNAME") and password == os.getenv("APP_PASSWORD")
+    return username == st.secrets["APP_USERNAME"] and password == st.secrets["APP_PASSWORD"]
 
 def initialize_chatbot():
     try:
-        if not os.getenv("OPENAI_API_KEY"):
+        if not st.secrets["OPENAI_API_KEY"]:
             st.error("OpenAI API key not found. Please add it to your .env file.")
             return False
         st.session_state.chatbot = PapuyChatbot()
